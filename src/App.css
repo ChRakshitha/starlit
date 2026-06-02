@@ -1,0 +1,728 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  overflow: hidden;
+}
+
+.sky {
+  width: 100vw;
+  height: 100vh;
+
+  position: relative;
+
+  background: linear-gradient(
+    to bottom,
+    #0B1021,
+    #151C33
+  );
+
+  overflow: hidden;
+}
+
+/* moon */
+.moon {
+  position: absolute;
+
+  top: 60px;
+  right: 80px;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+
+  background: #F5F1E8;
+
+  overflow: hidden;
+
+  z-index: 50;
+
+  box-shadow:
+    0 0 15px rgba(245,241,232,.12);
+
+  transition:
+    box-shadow 1.5s ease;
+}
+.moon-photo {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  z-index: 2;
+
+  opacity: 1;
+
+  transition: opacity 1.5s ease-in-out;
+}
+.moon-photo.fade-out {
+  opacity: 0;
+}
+
+.moon-shadow {
+  position: absolute;
+
+  top: 0;
+
+  width: 100px;
+  height: 100px;
+  z-index: 3;
+
+  border-radius: 50%;
+
+  background: #0B1021;
+
+  transition: all 1s ease;
+}
+
+.moon.forming,
+.moon.final {
+  box-shadow:
+    inset -12px 0 0 #F5F1E8,
+    0 0 50px rgba(245,241,232,.5),
+    0 0 100px rgba(245,241,232,.2);
+}
+
+.moon-full {
+  box-shadow:
+    0 0 30px rgba(245,241,232,.25),
+    0 0 60px rgba(245,241,232,.12);
+}
+
+.full-moon .moon {
+  box-shadow:
+    0 0 40px rgba(245,241,232,.35),
+    0 0 80px rgba(245,241,232,.15),
+    0 0 120px rgba(245,241,232,.08);
+}
+
+.moon.glow-active {
+  animation: moonPulse 3s ease-in-out infinite;
+}
+
+@keyframes moonPulse {
+  0% {
+    box-shadow:
+      0 0 25px rgba(255,255,255,0.4),
+      0 0 50px rgba(255,255,255,0.3);
+  }
+
+  50% {
+    box-shadow:
+      0 0 50px rgba(255,255,255,0.8),
+      0 0 100px rgba(255,255,255,0.6);
+  }
+
+  100% {
+    box-shadow:
+      0 0 25px rgba(255,255,255,0.4),
+      0 0 50px rgba(255,255,255,0.3);
+  }
+}
+
+.constellation-star {
+  position: absolute;
+
+  color: #FFF8D6;
+
+  font-size: 12px;
+
+  opacity: 0;
+
+  animation:
+    constellationAppear 2s ease forwards;
+
+  text-shadow:
+    0 0 8px rgba(255,248,214,.5);
+}
+
+@keyframes constellationAppear {
+
+  from {
+    opacity: 0;
+    transform: scale(.5);
+  }
+
+  to {
+    opacity: .8;
+    transform: scale(1);
+  }
+
+}
+
+/* progress */
+
+.progress {
+  position: absolute;
+
+  bottom: 30px;
+  width: 100%;
+
+  text-align: center;
+
+  color: #F5F1E8;
+
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.star {
+  position: absolute;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.35);
+
+  cursor: pointer;
+
+  transition:
+    left 4s cubic-bezier(.2,.8,.2,1),
+    top 4s cubic-bezier(.2,.8,.2,1),
+    transform .4s ease,
+    opacity .4s ease;
+  
+  animation:
+    twinkle 8s infinite ease-in-out,
+    floatStar 12s infinite ease-in-out;
+}
+
+.star:hover {
+  background: rgba(255,255,255,.55);
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.4);
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: .5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: .5;
+  }
+}
+
+@keyframes floatStar {
+  0% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 2px -2px;
+  }
+
+  100% {
+    translate: 0 0;
+  }
+}
+
+.note {
+  position: absolute;
+
+  width: 240px;
+
+  background: #F6F0E4;
+
+  color: #2A2A2A;
+
+  padding: 14px;
+
+  border-radius: 14px;
+
+  font-size: 16px;
+
+  line-height: 1.5;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.18);
+
+  animation: noteFade .4s ease;
+}
+
+@keyframes noteFade {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.found {
+  width: auto;
+  height: auto;
+
+  background: transparent;
+
+  color: #FFF8D6;
+
+  font-size: 14px;
+
+  animation:
+    revealStar .6s ease forwards;
+
+  text-shadow:
+    0 0 10px rgba(255,248,214,.8),
+    0 0 20px rgba(255,248,214,.5);
+}
+
+.background-star {
+  position: absolute;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.35);
+
+  animation:
+    twinkle 8s infinite ease-in-out;
+}
+
+@keyframes revealStar {
+  from {
+    opacity: 0;
+    transform: scale(.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+.glow .found {
+  animation:
+    pulseGlow 1.5s infinite;
+}
+@keyframes pulseGlow {
+
+  0% {
+    transform: scale(1.3);
+  }
+
+  50% {
+    transform: scale(1.7);
+  }
+
+  100% {
+    transform: scale(1.3);
+  }
+
+}
+
+/* Interactive Shooting/Floating Star Container */
+.shooting-star-container {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.shooting-star-container.flying {
+  left: -50px;
+  top: 20%;
+  animation: shoot-across 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.shooting-star-container.floating {
+  left: 80%;
+  top: 15%;
+  animation: float-gently 4s infinite ease-in-out;
+}
+
+.shooting-star-container.clicked {
+  display: none; /* Hide the small star when the modal overlay is shown */
+}
+
+.shooting-star-container:hover {
+  transform: scale(1.15);
+}
+
+/* Avatar inside the flying star */
+.star-avatar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #FFF8D6;
+  box-shadow: 0 0 15px rgba(255, 248, 214, 0.6);
+  overflow: visible;
+}
+
+.star-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.star-avatar-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset 0 0 10px rgba(255, 248, 214, 0.8);
+  pointer-events: none;
+  animation: avatar-pulse 2s infinite ease-in-out;
+}
+
+@keyframes avatar-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+/* Trailing streak during flight */
+.star-tail {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%) rotate(15deg);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to left, rgba(255, 248, 214, 0.8), rgba(255, 255, 255, 0));
+  pointer-events: none;
+  transform-origin: right center;
+}
+
+@keyframes shoot-across {
+  0% {
+    left: -50px;
+    top: 20%;
+    transform: scale(0.6) rotate(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1) rotate(-10deg);
+  }
+  100% {
+    left: 80%;
+    top: 15%;
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes float-gently {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    box-shadow: 0 0 15px rgba(255, 248, 214, 0.6);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 248, 214, 0.9);
+  }
+}
+
+/* Whimsical Overlay */
+.whimsical-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 16, 33, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* Whimsical Card */
+.whimsical-card {
+  background: linear-gradient(135deg, #1C233D, #0B1021);
+  border: 2px solid #FFF8D6;
+  border-radius: 20px;
+  padding: 30px;
+  width: 340px;
+  text-align: center;
+  color: #F5F1E8;
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.5), 
+    0 0 30px rgba(255, 248, 214, 0.2);
+  position: relative;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  overflow: hidden;
+}
+
+.whimsical-avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  animation: bob-wobble 4s infinite ease-in-out;
+}
+
+.whimsical-avatar-large {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid #FFF8D6;
+  box-shadow: 0 0 25px rgba(255, 248, 214, 0.5);
+  object-fit: cover;
+}
+
+.whimsical-avatar-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 15px rgba(255, 248, 214, 0.6);
+  pointer-events: none;
+}
+
+.whimsical-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  color: #FFF8D6;
+  margin-bottom: 12px;
+  text-shadow: 0 0 10px rgba(255, 248, 214, 0.4);
+}
+
+.whimsical-message {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #F5F1E8;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.close-whimsical-btn {
+  background: #FFF8D6;
+  color: #0B1021;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 248, 214, 0.3);
+}
+
+.close-whimsical-btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 248, 214, 0.5);
+}
+
+/* Whimsical Sparkle Swarm Animation */
+.whimsical-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 20px;
+  animation: float-sparkle 3s infinite ease-in-out;
+  opacity: 0;
+}
+
+.s1 { left: 15%; top: 15%; --dx: -15px; --dy: -30px; animation-delay: 0s; }
+.s2 { right: 15%; top: 20%; --dx: 25px; --dy: -25px; animation-delay: 0.4s; }
+.s3 { left: 20%; bottom: 20%; --dx: -20px; --dy: 30px; animation-delay: 0.8s; }
+.s4 { right: 20%; bottom: 25%; --dx: 30px; --dy: 20px; animation-delay: 1.2s; }
+.s5 { left: 50%; top: 10%; --dx: 0px; --dy: -35px; animation-delay: 1.6s; }
+.s6 { right: 45%; bottom: 10%; --dx: 10px; --dy: 35px; animation-delay: 2s; }
+.s7 { left: 10%; top: 50%; --dx: -30px; --dy: 5px; animation-delay: 2.4s; }
+.s8 { right: 10%; top: 50%; --dx: 30px; --dy: -5px; animation-delay: 2.8s; }
+
+@keyframes float-sparkle {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(var(--dx), var(--dy)) scale(1.2);
+  }
+  100% {
+    transform: translate(calc(var(--dx) * 1.5), calc(var(--dy) * 1.5)) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.7) translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bob-wobble {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+  75% {
+    transform: translateY(6px) rotate(4deg);
+  }
+}
+
+.constellation {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  animation: lineFade 2s ease forwards;
+}
+
+.constellation line {
+  stroke: rgba(255,255,255,.25);
+  stroke-width: 1;
+}
+
+@keyframes lineFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+.constellation {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+.constellation.fade-out {
+  opacity: 0;
+}
+
+.bottom-message {
+  position: absolute;
+
+  bottom: 40px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: #F5F1E8;
+
+  font-size: 18px;
+  letter-spacing: 0.5px;
+
+  opacity: 1;
+
+  text-align: center;
+
+  max-width: 500px;
+}
+
+.intro-card {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background: rgba(10, 16, 33, 0.85);
+
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  padding: 24px 32px;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  color: #F5F1E8;
+
+  z-index: 1000;
+
+  animation: introFade 5s forwards;
+}
+
+.intro-star {
+  font-size: 24px;
+  margin-bottom: 12px;
+
+  color: #FFF8D6;
+
+  text-shadow:
+    0 0 10px rgba(255,248,214,.7);
+}
+
+.intro-card p {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.intro-card span {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+@keyframes introFade {
+
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
